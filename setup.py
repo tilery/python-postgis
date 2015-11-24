@@ -1,10 +1,11 @@
 import glob
+import imp
 from setuptools import setup, find_packages, Extension
 from codecs import open  # To use a consistent encoding
 from os import path
 import sys
 
-import postgis
+META = imp.load_source('meta', path.join('.', 'postgis', '__meta__.py'))
 
 HERE = path.abspath(path.dirname(__file__))
 
@@ -50,12 +51,12 @@ else:
 
 setup(
     name='psycopg-postgis',
-    version=postgis.__version__,
-    description=postgis.__doc__,
+    version=META.__version__,
+    description=META.__doc__,
     long_description=long_description,
-    url=postgis.__homepage__,
-    author=postgis.__author__,
-    author_email=postgis.__contact__,
+    url=META.__homepage__,
+    author=META.__author__,
+    author_email=META.__contact__,
     license='WTFPL',
 
     # See https://pypi.python.org/pypi?%3Aaction=list_classifiers
