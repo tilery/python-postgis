@@ -1,0 +1,16 @@
+machine:
+    python:
+        version: 3.4.3
+
+database:
+    pre:
+    - psql -U ubuntu -c "CREATE DATABASE test;"
+    - psql -U ubuntu -c "create extension postgis" -d test
+
+test:
+    override:
+    - py.test tests/
+
+dependencies:
+    pre:
+    -  pip install pytest
