@@ -1,3 +1,5 @@
+[![Circle CI](https://circleci.com/gh/yohanboniface/psycopg-postgis.svg?style=svg)](https://circleci.com/gh/yohanboniface/psycopg-postgis)
+
 # psycopg-postgis
 
 PostGIS helpers for psycopg2.
