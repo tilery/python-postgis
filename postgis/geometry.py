@@ -44,6 +44,13 @@ class Geometry(object, metaclass=Typed):
     def wkt(self):
         raise NotImplementedError()
 
+    @property
+    def geojson(self):
+        return {
+            'type': self.__class__.__name__,
+            'coordinates': self.coords
+        }
+
 
 def register(cursor):
     cursor.execute("SELECT NULL::geometry")

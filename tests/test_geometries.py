@@ -46,3 +46,20 @@ def test_polyggon_should_round(cursor, expected):
 ])
 def test_geom_should_compare_with_coords(left, right):
     assert left == right
+
+
+def test_point_geojson():
+    point = Point(1, 2)
+    assert point.geojson == {"type": "Point", "coordinates": (1, 2)}
+
+
+def test_linestring_geojson():
+    line = LineString(((1, 2), (3, 4)))
+    assert line.geojson == {"type": "LineString",
+                            "coordinates": ((1, 2), (3, 4))}
+
+
+def test_polygon_geojson():
+    poly = Polygon((((1, 2), (3, 4), (5, 6), (1, 2)),))
+    assert poly.geojson == {"type": "Polygon",
+                            "coordinates": (((1, 2), (3, 4), (5, 6), (1, 2)),)}

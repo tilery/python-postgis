@@ -7,7 +7,7 @@ class Polygon(Geometry):
     TYPE = 3
 
     def __init__(self, rings, srid=None):
-        self.rings = list(rings)
+        self.rings = rings
         if srid:
             self.srid = srid
 
