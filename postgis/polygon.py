@@ -31,10 +31,6 @@ class Polygon(Geometry):
                    for index in range(reader.read_int())], srid)
 
     @property
-    def wkt(self):
-        return "POLYGON({})".format(self.wkt_coords)
-
-    @property
     def wkt_coords(self):
         return ', '.join('({})'.format(r.wkt_coords) for r in self)
 

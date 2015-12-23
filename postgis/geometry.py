@@ -41,8 +41,12 @@ class Geometry(object, metaclass=Typed):
         return self.coords == other
 
     @property
+    def name(self):
+        return self.__class__.__name__
+
+    @property
     def wkt(self):
-        raise NotImplementedError()
+        return "{}({})".format(self.name.upper(), self.wkt_coords)
 
     @property
     def geojson(self):

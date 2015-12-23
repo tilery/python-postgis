@@ -4,8 +4,6 @@
 
 PostGIS helpers for psycopg2.
 
-**Warning: experimental work in progress, only Point, LineString, Polygon supported at this time**
-
 ## Install
 
 Not pypi release yet:

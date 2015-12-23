@@ -5,7 +5,13 @@ class Point(Geometry):
 
     TYPE = 1
 
-    def __init__(self, x, y, z=None, m=None, srid=None):
+    def __init__(self, x, y=None, z=None, m=None, srid=None):
+        if y is None and isinstance(x, (tuple, list)):
+            x, y, *extra = x
+            if extra:
+                z, *extra = extra
+                if extra:
+                    m = extra[0]
         self.x = x
         self.y = y
         self.z = z
@@ -18,6 +24,10 @@ class Point(Geometry):
             return self.x
         elif item in (1, 'y'):
             return self.y
+        elif item in (2, 'z'):
+            return self.z
+        elif item in (3, 'm'):
+            return self.m
 
     @property
     def has_z(self):
@@ -29,10 +39,6 @@ class Point(Geometry):
                    reader.read_double() if reader.has_z else None,
                    reader.read_double() if reader.has_m else None,
                    srid)
-
-    @property
-    def wkt(self):
-        return "POINT({})".format(self.wkt_coords)
 
     @property
     def wkt_coords(self):

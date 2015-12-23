@@ -31,10 +31,6 @@ class LineString(Geometry):
                    for index in range(reader.read_int())], srid)
 
     @property
-    def wkt(self):
-        return "LINESTRING({})".format(self.wkt_coords)
-
-    @property
     def wkt_coords(self):
         return ', '.join(p.wkt_coords for p in self)
 

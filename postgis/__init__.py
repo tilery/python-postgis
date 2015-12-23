@@ -3,7 +3,10 @@ from .geometry import Geometry, register
 from .point import Point
 from .linestring import LineString
 from .polygon import Polygon
+from .multipoint import MultiPoint
+from .multilinestring import MultiLineString
+from .multipolygon import MultiPolygon
 from .__meta__ import __version__
 
 __all__ = ['Geometry', 'register', 'Point', 'LineString', 'Polygon',
-           '__version__']
+           'MultiPoint', 'MultiLineString', 'MultiPolygon', '__version__']
