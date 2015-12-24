@@ -19,15 +19,19 @@ You can first install cython to have a compiled version:
 
 You need to register the extension:
 
-    import postgis
-    postgis.register(mydatabase.get_cursor())
+    > import postgis
+    > postgis.register(mydatabase.get_cursor())
 
-Then you can pass and get geoms using psycopg:
+Then you can pass python geometries instance to psycopg:
 
-    cursor.execute('INSERT INTO table (geom) VALUES (%s)', [Point(x=1, y=2, srid=4326)])
-    cursor.execute('SELECT geom FROM points LIMIT 1')
-    geom = cursor.fetchone()[0]
-    assert geom.coords == (1, 2)
+    > cursor.execute('INSERT INTO table (geom) VALUES (%s)', [Point(x=1, y=2, srid=4326)])
+
+And retrieve data as python geometries instances:
+
+    > cursor.execute('SELECT geom FROM points LIMIT 1')
+    > geom = cursor.fetchone()[0]
+    > geom
+    <Point POINT(1.0 2.0)>
 
 
 ## Example
