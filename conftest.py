@@ -8,7 +8,8 @@ db = psycopg2.connect(dbname="test")
 cur = db.cursor()
 register(cur)
 
-geoms = [Point, LineString, Polygon, MultiPoint, MultiLineString, MultiPolygon]
+geoms = [Point, LineString, Polygon, MultiPoint, MultiLineString, MultiPolygon,
+         GeometryCollection]
 
 
 def pytest_configure(config):

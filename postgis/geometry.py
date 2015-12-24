@@ -51,7 +51,7 @@ class Geometry(object, metaclass=Typed):
     @property
     def geojson(self):
         return {
-            'type': self.__class__.__name__,
+            'type': self.name,
             'coordinates': self.coords
         }
 

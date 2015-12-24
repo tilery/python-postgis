@@ -17,7 +17,7 @@ MULTI = (
 @pytest.mark.parametrize('expected', [
     MULTI,
 ])
-def test_multipoint_should_round(cursor, expected):
+def test_multipolygon_should_round(cursor, expected):
     params = [MultiPolygon(expected, srid=4326)]
     cursor.execute('INSERT INTO multipolygon (geom) VALUES (%s)', params)
     cursor.execute('SELECT geom FROM multipolygon WHERE geom=%s', params)
@@ -25,7 +25,7 @@ def test_multipoint_should_round(cursor, expected):
     assert geom.coords == expected
 
 
-def test_multipoint_geojson():
+def test_multilinestring_geojson():
     multi = MultiPolygon(MULTI)
     assert multi.geojson == {
         "type": "MultiPolygon",
