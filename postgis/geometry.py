@@ -1,5 +1,6 @@
 from psycopg2 import extensions as _ext
 from .reader import EWKBReader, Typed
+from .geojson import GeoJSON
 
 
 class Geometry(object, metaclass=Typed):
@@ -50,10 +51,10 @@ class Geometry(object, metaclass=Typed):
 
     @property
     def geojson(self):
-        return {
+        return GeoJSON({
             'type': self.name,
             'coordinates': self.coords
-        }
+        })
 
 
 def register(cursor):

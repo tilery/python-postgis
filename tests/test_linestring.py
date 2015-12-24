@@ -20,6 +20,13 @@ def test_linestring_geojson():
                             "coordinates": ((1, 2), (3, 4))}
 
 
+def test_linestring_geojson_as_string():
+    line = LineString(((1, 2), (3, 4)))
+    geojson = str(line.geojson)
+    assert '"type": "LineString"' in geojson
+    assert '"coordinates": [[1, 2], [3, 4]]' in geojson
+
+
 def test_geom_should_compare_with_coords():
     assert ((30, 10), (10, 30), (40, 40)) == LineString(((30, 10), (10, 30), (40, 40)))  # noqa
 

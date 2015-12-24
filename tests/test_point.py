@@ -20,6 +20,13 @@ def test_point_geojson():
     assert point.geojson == {"type": "Point", "coordinates": (1, 2)}
 
 
+def test_point_geojson_as_string():
+    point = Point(1, 2)
+    geojson = str(point.geojson)
+    assert '"type": "Point"' in geojson
+    assert '"coordinates": [1, 2]' in geojson
+
+
 def test_point_should_compare_with_coords():
     assert (-1.123456789, 2.987654321) == Point(-1.123456789, 2.987654321)
 

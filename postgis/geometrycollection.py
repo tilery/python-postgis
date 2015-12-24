@@ -1,4 +1,5 @@
 from .geometry import Geometry
+from .geojson import GeoJSON
 
 
 class GeometryCollection(Geometry):
@@ -42,7 +43,7 @@ class GeometryCollection(Geometry):
 
     @property
     def geojson(self):
-        return {
+        return GeoJSON({
             'type': self.name,
             'geometries': [g.geojson for g in self]
-        }
+        })
