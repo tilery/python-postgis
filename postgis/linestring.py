@@ -25,6 +25,9 @@ class LineString(Geometry):
     def has_m(self):
         return self.points[0].has_m
 
+    def __getitem__(self, item):
+        return self.points[item]
+
     @classmethod
     def from_ewkb_body(cls, reader, srid=None):
         return cls([Point.from_ewkb_body(reader)
