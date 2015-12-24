@@ -29,6 +29,17 @@ class Point(Geometry):
         elif item in (3, 'm'):
             return self.m
 
+    def __iter__(self):
+        return iter(self.values())
+
+    _keys = ['x', 'y', 'z', 'm']
+
+    def keys(self):
+        return [k for k in self._keys if self[k] is not None]
+
+    def values(self):
+        return tuple(self[k] for k in self.keys())
+
     @property
     def has_z(self):
         return self.z is not None
@@ -46,5 +57,4 @@ class Point(Geometry):
 
     @property
     def coords(self):
-        return tuple(p for p in (self.x, self.y, self.z, self.m)
-                     if p is not None)
+        return self.values()

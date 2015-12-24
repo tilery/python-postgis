@@ -51,3 +51,35 @@ def test_can_create_point_with_z():
 def test_point_geojson_with_z():
     point = Point(1, 2, 3)
     assert point.geojson == {"type": "Point", "coordinates": (1, 2, 3)}
+
+
+def test_point_can_be_unpacked():
+    point = Point(1, 2)
+    x, y = point
+    assert x == 1
+    assert y == 2
+
+
+def test_point_can_be_unpacked_to_dict():
+    point = Point(1, 2)
+    data = dict(point)
+    assert data['x'] == 1
+    assert data['y'] == 2
+    assert len(data) == 2
+
+
+def test_point_with_z_can_be_unpacked():
+    point = Point(1, 2, 3)
+    x, y, z = point
+    assert x == 1
+    assert y == 2
+    assert z == 3
+
+
+def test_point_with_z_can_be_unpacked_to_dict():
+    point = Point(1, 2, 3)
+    data = dict(point)
+    assert data['x'] == 1
+    assert data['y'] == 2
+    assert data['z'] == 3
+    assert len(data) == 3
