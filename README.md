@@ -1,4 +1,4 @@
-[![Circle CI](https://circleci.com/gh/yohanboniface/psycopg-postgis.svg?style=svg)](https://circleci.com/gh/yohanboniface/psycopg-postgis)
+[![Circle CI](https://circleci.com/gh/yohanboniface/psycopg-postgis.svg?style=svg)](https://circleci.com/gh/yohanboniface/psycopg-postgis) [![PyPI](https://img.shields.io/pypi/v/psycopg-postgis.svg)](https://pypi.python.org/pypi/psycopg-postgis) [![PyPI](https://img.shields.io/pypi/pyversions/psycopg-postgis.svg)](https://pypi.python.org/pypi/psycopg-postgis) [![PyPI](https://img.shields.io/pypi/implementation/psycopg-postgis.svg)](https://pypi.python.org/pypi/psycopg-postgis) [![PyPI](https://img.shields.io/pypi/status/psycopg-postgis.svg)](https://pypi.python.org/pypi/psycopg-postgis)
 
 # psycopg-postgis
 
@@ -6,13 +6,12 @@ PostGIS helpers for psycopg2.
 
 ## Install
 
-Not pypi release yet:
+    pip install psycopg-postgis
 
-    pip install git+https://github.com/yohanboniface/psycopg-postgis
-
-You can first install cython to have a compiled version:
+If you want a compiled version, first install `cython`:
 
     pip install cython
+    pip install psycopg-postgis
 
 
 ## Usage
