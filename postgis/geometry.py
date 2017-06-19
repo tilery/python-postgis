@@ -62,3 +62,8 @@ def register(cursor):
     oid = cursor.description[0][1]
     GEOMETRY = _ext.new_type((oid, ), "GEOMETRY", Geometry.from_ewkb)
     _ext.register_type(GEOMETRY)
+
+    cursor.execute("SELECT NULL::geography")
+    oid = cursor.description[0][1]
+    GEOGRAPHY = _ext.new_type((oid, ), "GEOGRAPHY", Geometry.from_ewkb)
+    _ext.register_type(GEOGRAPHY)
