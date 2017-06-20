@@ -3,6 +3,7 @@ from .geometry import Geometry
 
 class Point(Geometry):
 
+    __slots__ = ['x', 'y', 'z', 'm', 'srid']
     TYPE = 1
 
     def __init__(self, x, y=None, z=None, m=None, srid=None):
@@ -12,10 +13,10 @@ class Point(Geometry):
                 z, *extra = extra
                 if extra:
                     m = extra[0]
-        self.x = x
-        self.y = y
-        self.z = z
-        self.m = m
+        self.x = float(x)
+        self.y = float(y)
+        self.z = int(z) if z else None
+        self.m = int(m) if m else None
         if srid is not None:
             self.srid = srid
 
@@ -50,6 +51,14 @@ class Point(Geometry):
                    reader.read_double() if reader.has_z else None,
                    reader.read_double() if reader.has_m else None,
                    srid)
+
+    def write_ewkb_body(self, writer):
+        writer.write_double(self.x)
+        writer.write_double(self.y)
+        if self.z:
+            writer.write_double(self.z)
+        if self.m:
+            writer.write_double(self.m)
 
     @property
     def wkt_coords(self):

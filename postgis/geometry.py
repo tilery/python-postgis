@@ -1,5 +1,11 @@
-from psycopg2 import extensions as _ext
-from .reader import EWKBReader, Typed
+try:
+    # Do not make psycopg2 a requirement.
+    from psycopg2.extensions import ISQLQuote
+except ImportError:
+    print('psycopg2 not installed')
+
+
+from .ewkb import Reader, Typed, Writer
 from .geojson import GeoJSON
 
 
@@ -21,14 +27,25 @@ class Geometry(object, metaclass=Typed):
     def from_ewkb(value, cursor=None):
         if not value:
             return None
-        return EWKBReader.from_hex(value)
+        return Reader.from_hex(value)
 
+    def to_ewkb(self):
+        return Writer.to_hex(self).decode()
+
+    def write_ewkb(self, writer):
+        self.write_ewkb_body(writer.clone(self))
+
+    def text(self):
+        return "ST_GeometryFromText('{}', {})".format(self.wkt, self.srid)
+
+    # Psycopg2 interface.
     def __conform__(self, protocol):
-        if protocol is _ext.ISQLQuote:
+        if protocol is ISQLQuote:
             return self
 
     def getquoted(self):
-        return "ST_GeometryFromText('{}', {})".format(self.wkt, self.srid)
+        return "'{}'".format(self.to_ewkb())
+    # End Psycopg2 interface.
 
     def __str__(self):
         return self.wkt
@@ -55,15 +72,3 @@ class Geometry(object, metaclass=Typed):
             'type': self.name,
             'coordinates': self.coords
         })
-
-
-def register(cursor):
-    cursor.execute("SELECT NULL::geometry")
-    oid = cursor.description[0][1]
-    GEOMETRY = _ext.new_type((oid, ), "GEOMETRY", Geometry.from_ewkb)
-    _ext.register_type(GEOMETRY)
-
-    cursor.execute("SELECT NULL::geography")
-    oid = cursor.description[0][1]
-    GEOGRAPHY = _ext.new_type((oid, ), "GEOGRAPHY", Geometry.from_ewkb)
-    _ext.register_type(GEOGRAPHY)

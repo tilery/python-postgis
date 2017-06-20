@@ -1,25 +1,30 @@
 [![Circle CI](https://img.shields.io/circleci/project/yohanboniface/psycopg-postgis.svg)](https://circleci.com/gh/yohanboniface/psycopg-postgis) [![PyPI](https://img.shields.io/pypi/v/psycopg-postgis.svg)](https://pypi.python.org/pypi/psycopg-postgis) [![PyPI](https://img.shields.io/pypi/pyversions/psycopg-postgis.svg)](https://pypi.python.org/pypi/psycopg-postgis) [![PyPI](https://img.shields.io/pypi/implementation/psycopg-postgis.svg)](https://pypi.python.org/pypi/psycopg-postgis) [![PyPI](https://img.shields.io/pypi/status/psycopg-postgis.svg)](https://pypi.python.org/pypi/psycopg-postgis)
 
-# psycopg-postgis
+# python-postgis
 
-PostGIS helpers for psycopg2.
+PostGIS helpers for psycopg2 and asyncpg.
 
 ## Install
 
-    pip install psycopg-postgis
+    pip install postgis
 
 If you want a compiled version, first install `cython`:
 
     pip install cython
-    pip install psycopg-postgis
+    pip install postgis
 
 
 ## Usage
 
 You need to register the extension:
 
-    > import postgis
-    > postgis.register(mydatabase.get_cursor())
+    # With psycopg2
+    > from postgis.psycopg import register
+    > register(connection)
+
+    # With asyncpg
+    > from postgis.asyncpg import register
+    > await register(connection)
 
 Then you can pass python geometries instance to psycopg:
 
@@ -36,10 +41,10 @@ And retrieve data as python geometries instances:
 ## Example
 
     > import psycopg2
-    > from postgis import register, LineString
+    > from postgis import LineString
+    > from postgis.psycopg import register
     > db = psycopg2.connect(dbname="test")
-    > cursor = db.cursor()
-    > register(cursor)
+    > register(db)
     > cursor.execute('CREATE TABLE IF NOT EXISTS mytable ("geom" geometry(LineString) NOT NULL)')
     > cursor.execute('INSERT INTO mytable (geom) VALUES (%s)', [LineString([(1, 2), (3, 4)], srid=4326)])
     > cursor.execute('SELECT geom FROM mytable LIMIT 1')

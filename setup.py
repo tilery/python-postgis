@@ -1,11 +1,10 @@
+"""Pyscopg and asyncpg helpers to work with PostGIS."""
+
 import glob
-import imp
 from setuptools import setup, find_packages, Extension
 from codecs import open  # To use a consistent encoding
 from os import path
 import sys
-
-META = imp.load_source('meta', path.join('.', 'postgis', '__meta__.py'))
 
 HERE = path.abspath(path.dirname(__file__))
 
@@ -29,8 +28,6 @@ def list_modules(dirname):
 
     return module_names
 
-with open('requirements.txt', encoding='utf-8') as reqs:
-    install_requires = [l for l in reqs.read().split('\n') if is_pkg(l)]
 
 try:
     from Cython.Distutils import build_ext
@@ -49,14 +46,16 @@ else:
     cmdclass = {'build_ext': build_ext}
 
 
+VERSION = (1, 0, 0)
+
 setup(
-    name='psycopg-postgis',
-    version=META.__version__,
-    description=META.__doc__,
+    name='postgis',
+    version=".".join(map(str, VERSION)),
+    description=__doc__,
     long_description=long_description,
-    url=META.__homepage__,
-    author=META.__author__,
-    author_email=META.__contact__,
+    url="https://github.com/yohanboniface/python-postgis",
+    author='Yohan Boniface',
+    author_email='yohan.boniface@data.gouv.fr',
     license='WTFPL',
 
     # See https://pypi.python.org/pypi?%3Aaction=list_classifiers
@@ -67,12 +66,11 @@ setup(
         'Topic :: Scientific/Engineering :: GIS',
 
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
     ],
-    keywords='psycopg postgis gis',
+    keywords='psycopg postgis gis asyncpg',
     packages=find_packages(exclude=['tests']),
-    install_requires=install_requires,
     extras_require={'test': ['pytest'], 'docs': 'mkdocs'},
     include_package_data=True,
     cmdclass=cmdclass,

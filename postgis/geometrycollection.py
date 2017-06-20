@@ -37,6 +37,11 @@ class GeometryCollection(Geometry):
     def from_ewkb_body(cls, reader, srid=None):
         return cls([reader.read() for index in range(reader.read_int())], srid)
 
+    def write_ewkb_body(self, writer):
+        writer.write_int(len(self.geoms))
+        for geom in self:
+            geom.write_ewkb(writer)
+
     @property
     def wkt_coords(self):
         return ', '.join(g.wkt for g in self)

@@ -12,14 +12,6 @@ COLLECTION = [
 ]
 
 
-def test_geometrycollection_should_round(cursor):
-    params = [GeometryCollection(COLLECTION, srid=4326)]
-    cursor.execute('INSERT INTO geometrycollection (geom) VALUES (%s)', params)
-    cursor.execute('SELECT geom FROM geometrycollection WHERE geom=%s', params)
-    geom = cursor.fetchone()[0]
-    assert geom == COLLECTION
-
-
 def test_geometrycollection_geojson():
     collection = GeometryCollection(COLLECTION)
     assert collection.geojson == {

@@ -1,12 +1,12 @@
 import psycopg2
+
 import pytest
-
-from postgis import *  # noqa
-
+from postgis import (GeometryCollection, LineString, MultiLineString,
+                     MultiPoint, MultiPolygon, Point, Polygon, register)
 
 db = psycopg2.connect(dbname="test")
 cur = db.cursor()
-register(cur)
+register(db)
 
 geoms = [Point, LineString, Polygon, MultiPoint, MultiLineString, MultiPolygon,
          GeometryCollection]
@@ -22,6 +22,8 @@ def pytest_configure(config):
 def pytest_unconfigure(config):
     for geom in geoms:
         cur.execute('DROP TABLE {}'.format(geom.__name__.lower()))
+    db.commit()
+    db.close()
 
 
 @pytest.fixture

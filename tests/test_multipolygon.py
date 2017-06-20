@@ -1,5 +1,3 @@
-import pytest
-
 from postgis import MultiPolygon, Polygon
 
 MULTI = (
@@ -12,17 +10,6 @@ MULTI = (
                 ((21, 30), (36, 35), (36, 20), (21, 30))
             ),
         )
-
-
-@pytest.mark.parametrize('expected', [
-    MULTI,
-])
-def test_multipolygon_should_round(cursor, expected):
-    params = [MultiPolygon(expected, srid=4326)]
-    cursor.execute('INSERT INTO multipolygon (geom) VALUES (%s)', params)
-    cursor.execute('SELECT geom FROM multipolygon WHERE geom=%s', params)
-    geom = cursor.fetchone()[0]
-    assert geom.coords == expected
 
 
 def test_multilinestring_geojson():

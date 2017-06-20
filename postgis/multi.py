@@ -3,18 +3,16 @@ from .geometry import Geometry
 
 class Multi(Geometry):
 
+    __slots__ = ['geoms', 'srid']
     SUBCLASS = None
 
     def __init__(self, geoms, srid=None):
-        self.geoms = list(geoms)
+        self.geoms = [self.SUBCLASS(g, srid=srid) for g in geoms]
         if srid:
             self.srid = srid
 
     def __iter__(self):
-        for geom in self.geoms:
-            if not isinstance(geom, self.SUBCLASS):
-                geom = self.SUBCLASS(geom)
-            yield geom
+        return iter(self.geoms)
 
     @property
     def has_z(self):
@@ -34,6 +32,11 @@ class Multi(Geometry):
     @property
     def wkt_coords(self):
         return ', '.join('({})'.format(g.wkt_coords) for g in self)
+
+    def write_ewkb_body(self, writer):
+        writer.write_int(len(self.geoms))
+        for geom in self:
+            geom.write_ewkb(writer)
 
     @property
     def coords(self):

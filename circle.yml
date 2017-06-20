@@ -1,6 +1,6 @@
 machine:
     python:
-        version: 3.4.3
+        version: 3.6.1
 
 database:
     pre:
@@ -13,4 +13,4 @@ test:
 
 dependencies:
     pre:
-    -  pip install pytest
+    -  pip install pytest psycopg2 asyncpg cython
