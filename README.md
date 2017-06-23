@@ -38,7 +38,7 @@ And retrieve data as python geometries instances:
     <Point POINT(1.0 2.0)>
 
 
-## Example
+## Example with psycopg2
 
     > import psycopg2
     > from postgis import LineString
@@ -59,3 +59,10 @@ And retrieve data as python geometries instances:
     {'coordinates': ((1.0, 2.0), (3.0, 4.0)), 'type': 'LineString'}
     > str(geom.geojson)
     '{"type": "LineString", "coordinates": [[1, 2], [3, 4]]}'
+
+
+## Example with asyncpg
+
+    from postgis.asyncpg import register
+    pool = await create_pool(**DB_CONFIG, loop=loop, max_size=100,
+                             init=register)
