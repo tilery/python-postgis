@@ -33,7 +33,7 @@ try:
     from Cython.Distutils import build_ext
     CYTHON = True
 except ImportError:
-    sys.stdout.write('\nNOTE: Cython not installed. psycopg-postgis will '
+    sys.stdout.write('\nNOTE: Cython not installed. python-postgis will '
                      'still work fine, but may run a bit slower.\n\n')
     CYTHON = False
     cmdclass = {}
