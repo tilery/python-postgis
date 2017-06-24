@@ -55,9 +55,9 @@ class Point(Geometry):
     def write_ewkb_body(self, writer):
         writer.write_double(self.x)
         writer.write_double(self.y)
-        if self.z:
+        if self.z is not None:
             writer.write_double(self.z)
-        if self.m:
+        if self.m is not None:
             writer.write_double(self.m)
 
     @property

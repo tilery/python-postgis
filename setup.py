@@ -46,7 +46,7 @@ else:
     cmdclass = {'build_ext': build_ext}
 
 
-VERSION = (1, 0, 1)
+VERSION = (1, 0, 2)
 
 setup(
     name='postgis',
