@@ -83,3 +83,18 @@ def test_string_are_cast():
     assert point.x == 1.0
     assert point.y == 2.0
     assert point.z == 3
+
+
+def test_0_as_z_is_considered():
+    point = Point(1, 2, 0)
+    assert point.x == 1.0
+    assert point.y == 2.0
+    assert point.z == 0
+
+
+def test_0_as_m_is_considered():
+    point = Point(1, 2, 3, 0)
+    assert point.x == 1.0
+    assert point.y == 2.0
+    assert point.z == 3
+    assert point.m == 0
