@@ -7,7 +7,10 @@ from .multipoint import MultiPoint
 from .multipolygon import MultiPolygon
 from .point import Point
 from .polygon import Polygon
-from .psycopg import register  # Retrocompat.
+try:
+    from .psycopg import register  # Retrocompat.
+except ImportError:
+    pass
 
 __all__ = ['Geometry', 'register', 'Point', 'LineString', 'Polygon',
            'MultiPoint', 'MultiLineString', 'MultiPolygon',
