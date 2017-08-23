@@ -1,6 +1,7 @@
 import binascii
 from io import BytesIO
 import struct
+from cpython cimport bool
 
 
 class Typed(type):
@@ -20,17 +21,23 @@ class Typed(type):
         return super().__call__(*args, **kwargs)
 
 
-class Reader:
+cdef class Reader:
 
-    __slots__ = ['stream', 'endianness', 'has_z', 'has_m']
+    cdef object stream
+    cdef bytes endianness
+    cdef public bool has_z
+    cdef public bool has_m
 
-    def __init__(self, stream):
+    def __cinit__(self, object stream):
         self.stream = stream
 
-    def clone(self):
+    cpdef clone(self):
         return type(self)(self.stream)
 
-    def read(self):
+    cpdef read(self):
+        return self._read()
+
+    cdef _read(self):
         # https://en.wikipedia.org/wiki/Well-known_text#Well-known_binary
         byte_order = self.stream.read(1)
         if byte_order == b'\x00':
@@ -53,22 +60,22 @@ class Reader:
         else:
             return class_.from_ewkb_body(self, srid)
 
-    def read_int(self):
+    cpdef read_int(self):
         return struct.unpack(self.endianness + b'I', self.stream.read(4))[0]
 
-    def read_double(self):
+    cpdef read_double(self):
         return struct.unpack(self.endianness + b'd', self.stream.read(8))[0]
 
-    @classmethod
-    def from_hex(cls, value):
-        return cls(BytesIO(binascii.a2b_hex(value))).read()
+
+cpdef read(str value):
+    return Reader(BytesIO(binascii.a2b_hex(value))).read()
 
 
-class Writer:
+cdef class Writer:
 
-    __slots__ = ['stream']
+    cdef object stream
 
-    def __init__(self, geometry, stream=None):
+    def __cinit__(self, object geometry, object stream=None):
         self.stream = stream or BytesIO()
         try:
             type_ = geometry.TYPE
@@ -85,17 +92,17 @@ class Writer:
         if geometry.has_srid:
             self.write_int(geometry.srid)
 
-    def write_int(self, value):
+    cpdef write_int(self, value):
         self.stream.write(struct.pack(b'<I', value))
 
-    def write_double(self, value):
+    cpdef write_double(self, value):
         self.stream.write(struct.pack(b'<d', value))
 
-    def clone(self, geometry):
+    cpdef clone(self, object geometry):
         return type(self)(geometry, self.stream)
 
-    @classmethod
-    def to_hex(cls, value):
-        writer = cls(value)
-        value.write_ewkb_body(writer)
-        return binascii.b2a_hex(writer.stream.getvalue()).upper()
+
+cpdef bytes write(object value):
+    writer = Writer(value)
+    value.write_ewkb_body(writer)
+    return binascii.b2a_hex(writer.stream.getvalue()).upper()

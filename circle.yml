@@ -1,16 +1,18 @@
 machine:
-    python:
-        version: 3.6.1
+  python:
+    version: 3.6.1
 
 database:
-    pre:
-    - psql -U ubuntu -c "CREATE DATABASE test;"
-    - psql -U ubuntu -c "create extension postgis" -d test
+  pre:
+  - psql -U ubuntu -c "CREATE DATABASE test;"
+  - psql -U ubuntu -c "create extension postgis" -d test
 
 test:
-    override:
-    - py.test tests/
+  override:
+  - py.test tests/
 
 dependencies:
-    pre:
-    -  pip install pytest psycopg2 asyncpg cython
+  override:
+  - python setup.py develop
+  pre:
+  -  pip install -U pip setuptools pytest psycopg2 asyncpg cython

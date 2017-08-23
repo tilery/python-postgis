@@ -5,6 +5,7 @@ from setuptools import setup, find_packages, Extension
 from codecs import open  # To use a consistent encoding
 from os import path
 import sys
+# from Cython.Build import cythonize
 
 HERE = path.abspath(path.dirname(__file__))
 
@@ -42,6 +43,7 @@ else:
     ext_modules = [
         Extension('postgis.' + ext, [path.join('postgis', ext + '.py')])
         for ext in list_modules(path.join(HERE, 'postgis'))]
+    ext_modules.append(Extension('postgis.ewkb', ['postgis/ewkb.pyx']))
 
     cmdclass = {'build_ext': build_ext}
 
