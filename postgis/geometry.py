@@ -1,8 +1,10 @@
+import warnings
+
 try:
     # Do not make psycopg2 a requirement.
     from psycopg2.extensions import ISQLQuote
 except ImportError:
-    print('psycopg2 not installed')
+    warnings.warn('psycopg2 not installed', ImportWarning)
 
 
 from .ewkb import Reader, Typed, Writer
