@@ -1,4 +1,4 @@
-[![Circle CI](https://img.shields.io/circleci/project/yohanboniface/psycopg-postgis.svg)](https://circleci.com/gh/yohanboniface/psycopg-postgis) [![PyPI](https://img.shields.io/pypi/v/psycopg-postgis.svg)](https://pypi.python.org/pypi/psycopg-postgis) [![PyPI](https://img.shields.io/pypi/pyversions/psycopg-postgis.svg)](https://pypi.python.org/pypi/psycopg-postgis) [![PyPI](https://img.shields.io/pypi/implementation/psycopg-postgis.svg)](https://pypi.python.org/pypi/psycopg-postgis) [![PyPI](https://img.shields.io/pypi/status/psycopg-postgis.svg)](https://pypi.python.org/pypi/psycopg-postgis)
+[![Circle CI](https://img.shields.io/circleci/project/yohanboniface/python-postgis.svg)](https://circleci.com/gh/yohanboniface/python-postgis) [![PyPI](https://img.shields.io/pypi/v/postgis.svg)](https://pypi.python.org/pypi/postgis) [![PyPI](https://img.shields.io/pypi/pyversions/postgis.svg)](https://pypi.python.org/pypi/postgis) [![PyPI](https://img.shields.io/pypi/implementation/postgis.svg)](https://pypi.python.org/pypi/postgis) [![PyPI](https://img.shields.io/pypi/status/postgis.svg)](https://pypi.python.org/pypi/postgis)
 
 # python-postgis
 
