@@ -15,8 +15,8 @@ class Point(Geometry):
                     m = extra[0]
         self.x = float(x)
         self.y = float(y)
-        self.z = int(z) if z is not None else None
-        self.m = int(m) if m is not None else None
+        self.z = float(z) if z is not None else None
+        self.m = float(m) if m is not None else None
         if srid is not None:
             self.srid = srid
 
