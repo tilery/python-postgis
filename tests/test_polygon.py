@@ -9,3 +9,11 @@ def test_polygon_geojson():
     poly = Polygon((((1, 2), (3, 4), (5, 6), (1, 2)),))
     assert poly.geojson == {"type": "Polygon",
                             "coordinates": (((1, 2), (3, 4), (5, 6), (1, 2)),)}
+
+
+def test_polygon_wkt():
+    poly = Polygon((((1, 2), (3, 4), (5, 6), (1, 2)),))
+    wkt = poly.wkt
+    wkt = wkt.replace('.0','')
+    wkt = wkt.replace(', ',',')
+    assert wkt == 'POLYGON((1 2,3 4,5 6,1 2))'
