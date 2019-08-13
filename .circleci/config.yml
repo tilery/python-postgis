@@ -1,0 +1,14 @@
+version: 2.1
+jobs:
+  build:
+    docker:
+      - image: circleci/python:3.6.4
+      - image: mdillon/postgis
+        environment:
+          POSTGRES_DB: test
+    steps:
+      - checkout
+      - run:
+          command: pip install pytest psycopg2 asyncpg cython
+      - run:
+          command: py.test -vvx tests/
