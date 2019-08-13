@@ -1,5 +1,5 @@
 from .geometry import Geometry
-
+from .point import Point
 
 class Multi(Geometry):
 
@@ -31,7 +31,8 @@ class Multi(Geometry):
 
     @property
     def wkt_coords(self):
-        return ', '.join('({})'.format(g.wkt_coords) for g in self)
+        fmt = '{}' if self.SUBCLASS == Point else '({})' 
+        return ', '.join(fmt.format(g.wkt_coords) for g in self)
 
     def write_ewkb_body(self, writer):
         writer.write_int(len(self.geoms))
