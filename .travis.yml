@@ -1,0 +1,28 @@
+sudo: false
+language: python
+dist: xenial
+python:
+- 3.6
+- 3.7
+services:
+- postgresql
+addons:
+  postgresql: 9.6
+  apt:
+    packages:
+    - libgdal-dev
+    - postgresql-9.6-postgis-2.5
+install:
+- pip install .
+- pip install cython pytest psycopg2 asyncpg
+before_script:
+  - psql -c 'create database test;' -U postgres
+  - psql -U postgres -d test -c "create extension postgis"
+script: py.test -vv tests/
+notifications:
+  email:
+    on_failure: always
+    on_success: never
+branches:
+  only:
+  - master
