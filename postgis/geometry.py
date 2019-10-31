@@ -7,7 +7,7 @@ except ImportError:
     warnings.warn('psycopg2 not installed', ImportWarning)
 
 
-from .ewkb import Reader, Typed, Writer
+from .ewkb import read, Typed, write
 from .geojson import GeoJSON
 
 
@@ -29,10 +29,10 @@ class Geometry(object, metaclass=Typed):
     def from_ewkb(value, cursor=None):
         if not value:
             return None
-        return Reader.from_hex(value)
+        return read(value)
 
     def to_ewkb(self):
-        return Writer.to_hex(self).decode()
+        return write(self).decode()
 
     def write_ewkb(self, writer):
         self.write_ewkb_body(writer.clone(self))
