@@ -98,3 +98,13 @@ def test_0_as_m_is_considered():
     assert point.y == 2.0
     assert point.z == 3
     assert point.m == 0
+
+
+def test_point_is_hashable():
+    p1 = Point(1, 1)
+    p2 = Point(1, 1)
+    p3 = Point(2, 2)
+    assert {p1, p2, p3} == {p1, p3}
+    p1 = Point(1, 1, srid=4326)
+    p2 = Point(1, 1, srid=3857)
+    assert len({p1, p2}) == 2

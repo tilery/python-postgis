@@ -1,15 +1,15 @@
 from .geometry import Geometry
 from .point import Point
 
+
 class Multi(Geometry):
 
-    __slots__ = ['geoms', 'srid']
+    __slots__ = ["geoms", "srid"]
     SUBCLASS = None
 
-    def __init__(self, geoms, srid=None):
+    def __init__(self, geoms, srid=0):
         self.geoms = [self.SUBCLASS(g, srid=srid) for g in geoms]
-        if srid:
-            self.srid = srid
+        self.srid = srid
 
     def __iter__(self):
         return iter(self.geoms)
@@ -31,8 +31,8 @@ class Multi(Geometry):
 
     @property
     def wkt_coords(self):
-        fmt = '{}' if self.SUBCLASS == Point else '({})' 
-        return ', '.join(fmt.format(g.wkt_coords) for g in self)
+        fmt = "{}" if self.SUBCLASS == Point else "({})"
+        return ", ".join(fmt.format(g.wkt_coords) for g in self)
 
     def write_ewkb_body(self, writer):
         writer.write_int(len(self.geoms))
