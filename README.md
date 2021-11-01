@@ -45,6 +45,7 @@ And retrieve data as python geometries instances:
     > from postgis.psycopg import register
     > db = psycopg2.connect(dbname="test")
     > register(db)
+    > cursor = db.cursor()
     > cursor.execute('CREATE TABLE IF NOT EXISTS mytable ("geom" geometry(LineString) NOT NULL)')
     > cursor.execute('INSERT INTO mytable (geom) VALUES (%s)', [LineString([(1, 2), (3, 4)], srid=4326)])
     > cursor.execute('SELECT geom FROM mytable LIMIT 1')
