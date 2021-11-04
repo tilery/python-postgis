@@ -6,7 +6,7 @@ class Point(Geometry):
     __slots__ = ['x', 'y', 'z', 'm', 'srid']
     TYPE = 1
 
-    def __init__(self, x, y=None, z=None, m=None, srid=None):
+    def __init__(self, x, y=None, z=None, m=None, srid=0):
         if y is None and isinstance(x, (tuple, list)):
             x, y, *extra = x
             if extra:
@@ -17,8 +17,7 @@ class Point(Geometry):
         self.y = float(y)
         self.z = float(z) if z is not None else None
         self.m = float(m) if m is not None else None
-        if srid is not None:
-            self.srid = srid
+        self.srid = srid
 
     def __getitem__(self, item):
         if item in (0, 'x'):

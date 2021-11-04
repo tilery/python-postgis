@@ -1,5 +1,8 @@
 import warnings
 
+from .ewkb import Reader, Typed, Writer
+from .geojson import GeoJSON
+
 try:
     # Do not make psycopg2 a requirement.
     from psycopg2.extensions import ISQLQuote
@@ -7,8 +10,6 @@ except ImportError:
     warnings.warn('psycopg2 not installed', ImportWarning)
 
 
-from .ewkb import Reader, Typed, Writer
-from .geojson import GeoJSON
 
 
 class Geometry(object, metaclass=Typed):
@@ -56,9 +57,13 @@ class Geometry(object, metaclass=Typed):
         return '<{} {}>'.format(self.__class__.__name__, self.wkt)
 
     def __eq__(self, other):
-        if isinstance(other, self.__class__):
-            other = other.coords
-        return self.coords == other
+        return hash(self) == hash(other)
+
+    def __hash__(self):
+        values = self.coords
+        if self.srid:
+            values = values + (self.srid,)
+        return hash(values)
 
     @property
     def name(self):

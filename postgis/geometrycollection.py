@@ -1,18 +1,17 @@
-from .geometry import Geometry
 from .geojson import GeoJSON
+from .geometry import Geometry
 
 
 class GeometryCollection(Geometry):
 
     TYPE = 7
 
-    def __init__(self, geoms, srid=None):
+    def __init__(self, geoms, srid=0):
         for geom in geoms:
             if not isinstance(geom, Geometry):
                 raise ValueError('{} is not instance of Geometry'.format(geom))
         self.geoms = list(geoms)
-        if srid:
-            self.srid = srid
+        self.srid = srid
 
     def __iter__(self):
         return self.geoms.__iter__()
